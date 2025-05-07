@@ -90,11 +90,9 @@ def evaluate_paths(input_image_path, gen_image_path):
     axes[1].set_title('Obstacle Intersection Count Comparison')
     axes[1].set_ylabel('Intersection Count')
 
-    # 生成保存路径
     base_filename = os.path.basename(input_image_path)  # 获取原文件名
     output_filename = os.path.join("image", f"eval_{base_filename}")  # 生成新的文件名
 
-    # 保存图片
     plt.tight_layout()
     plt.savefig(output_filename)
     plt.show()
@@ -103,6 +101,6 @@ if __name__ == "__main__":
     input_image_path = input("Please enter the original image file name (e.g., maze1.png): ")
     input_image_path = './image/' + input_image_path  # 拼接成完整的路径
     gen_image_path = input("Please enter the generated image file name (e.g., gen_maze1.png): ")
-    gen_image_path = './image/' + gen_image_path  # 拼接成完整的路径
+    gen_image_path = './image/' + gen_image_path
 
     evaluate_paths(input_image_path, gen_image_path)

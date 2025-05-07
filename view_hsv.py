@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def show_hsv_values(input_image_path):
-    # 加载图像
+
     img = cv2.imread(input_image_path)
     if img is None:
         print("Error: Could not load image.")
@@ -12,7 +12,6 @@ def show_hsv_values(input_image_path):
     # 将图像转换为HSV色彩空间
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-    # 显示图像
     plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
     plt.title('Click on the image to see HSV values. Close the window to exit.')
     plt.axis('off')

@@ -193,7 +193,6 @@ def get_min_obstacle_gap(obstacle_mask, default_min_gap=5):
     :param default_min_gap: 如果没有找到有效的间隙，则返回的默认最小间隙大小
     :return: 障碍物之间的最小间隙大小
     """
-    # 计算距离变换，得到每个像素点到最近障碍物的距离
     distance_map = cv2.distanceTransform(~obstacle_mask, cv2.DIST_L2, 3)
     # 找到最小的非零距离作为障碍物之间的最小间隙
     min_gap = np.min(distance_map[distance_map > 0]) if np.any(distance_map > 0) else default_min_gap
