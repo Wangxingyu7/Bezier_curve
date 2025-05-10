@@ -195,5 +195,71 @@ def instructure_pict_article():
     plt.show()
 
 
+def convex_example_1():
+    """
+    绘制一个直角拐角和一条避开拐角的曲线，并在曲线上标记五个红色点。
+    左边图：绘制所有红色点生成的凸包（绿色）。
+    右边图：只用中间4个点绘制凸包。
+    """
+
+    def draw_corner(ax):
+        ax.plot([0.2, 0.2], [0.2, 0.7], 'k', linewidth=2)
+        ax.plot([0.2, 0.7], [0.7, 0.7], 'k', linewidth=2)
+
+    def draw_curve(ax):
+        t = np.linspace(0.4 * np.pi, np.pi, 1000)
+        x = 0.5 * np.cos(t) + 0.5
+        y = 0.5 * np.sin(t) + 0.5
+        ax.plot(x, y, 'b', linewidth=2)
+        return x, y, t
+
+    def draw_convex_hull(ax, points, color='g', linewidth=2):
+        hull = ConvexHull(points)
+        for simplex in hull.simplices:
+            ax.plot(points[simplex, 0], points[simplex, 1], color=color, linewidth=linewidth)
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6), constrained_layout=True)
+
+    ax1.set_xlim(-0.1, 1.1)
+    ax1.set_ylim(-0.1, 1.1)
+    ax1.set_aspect(1)
+    ax1.axis('off')
+    ax1.set_title("Before Encrypted Control Point", fontsize=12)
+
+    draw_corner(ax1)
+    x, y, t = draw_curve(ax1)
+    points = np.array([[x[i], y[i]] for i in [0, 250, 500, 750, -1]])  # 选择曲线上的5个点
+    for point in points:
+        ax1.plot(point[0], point[1], 'ro', markersize=6)
+    draw_convex_hull(ax1, points, color='g', linewidth=2)
+
+    ax2.set_xlim(-0.1, 1.1)
+    ax2.set_ylim(-0.1, 1.1)
+    ax2.set_aspect(1)
+    ax2.axis('off')
+    ax2.set_title("After Encrypted Control Point", fontsize=12)
+
+    draw_corner(ax2)
+    x, y, t = draw_curve(ax2)
+    new_points_indices = [200, 300, 400, 500, 600, 700]  # 选择曲线上的6个新点
+    new_points = np.array([[x[i], y[i]] for i in new_points_indices])
+    for point in new_points:
+        ax2.plot(point[0], point[1], 'ro', markersize=6)
+    draw_convex_hull(ax2, new_points, color='g', linewidth=2)
+
+    plt.rcParams.update({
+        'font.size': 10,
+        'lines.linewidth': 2,
+        'lines.markersize': 6,
+        'axes.linewidth': 1.5,
+        'grid.linewidth': 1.0,
+        'grid.linestyle': '--',
+        'grid.color': '#cccccc',
+    })
+
+    plt.show()
+
+
+
 if __name__ == "__main__":
-    instructure_pict_article()
+    convex_example_1()
